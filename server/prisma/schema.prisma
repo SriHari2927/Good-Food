@@ -22,12 +22,13 @@ enum MealType {
   Breakfast
   Lunch
   Dinner
-}
-
-enum Plan {
-  Individual
   Combo
 }
+
+// enum Plan {
+//   Individual
+//   Combo
+// }
  
 enum tier {
   Budget
@@ -46,7 +47,6 @@ model Users {
   UserNumber Phone_Number[]
   UserPosition User_Position[]
   UserAddress User_Address[]
-  UserSubscription User_Subscription[]
   SubscriptionPayment Subscription_Payment[]
 }
 
@@ -91,10 +91,11 @@ model User_Subscription {
   start_date DateTime
   end_date DateTime
   status String
-  user_id Int
+  customer_id String 
+  validity_days Int
   created_at DateTime
   updatedAt DateTime
-  UserSubcription Users @relation(fields: [user_id],references: [id])
+  Subscription Subscription @relation(fields: [subscription_id],references: [id])
 }
 
 model Subscription {
@@ -102,16 +103,20 @@ model Subscription {
   parent_plan_id     Int
   plan_description   String
   tier_id Int
-  duration_qty_id Int
+  duration_id Int
+  quantity_id Int
   meal_type_id Int
-  price_id              Float
+  price_id              Int
   created_at         DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
   SubscriptionPayments Subscription_Payment[] @relation("SubscriptionToPayment")
   parentPlan1        Parent_Plan          @relation(fields: [parent_plan_id], references: [id])
   TierSub Tier @relation(fields: [tier_id],references: [id])
-  DurationSub Duration_qty @relation(fields: [duration_qty_id],references: [id])
+  DurationSub Quantity @relation(fields: [duration_id],references: [id])
+  DurationSubs Duration @relation(fields: [quantity_id],references: [id])
   MealSub Meal_type @relation(fields: [meal_type_id],references: [id])
+  PricingDetails Pricing_Details @relation(fields: [price_id],references: [id])
+  Subscription User_Subscription[]
 }
 
 model Tier {
@@ -122,18 +127,27 @@ model Tier {
   TierSub Subscription[]
 }
 
-model Duration_qty {
+model Quantity {
   id Int @id @default(autoincrement())
-  days Int
+  quantity Int
   created_at DateTime
   updatedAt DateTime
   DurationSub Subscription[]
 }
 
+model Duration {
+  id Int @id @default(autoincrement())
+  actual_days Int
+  addon_days Int
+  created_at DateTime
+  updatedAt DateTime
+  DurationSubs Subscription[]
+
+}
 
 model Parent_Plan {
   id         Int       @id @default(autoincrement())
-  plan_name       Plan
+  plan_name       String
   created_at DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   subscriptions Subscription[]
@@ -167,6 +181,7 @@ model Pricing_Details {
   created_at DateTime
   updatedAt DateTime
   PricingSub Subscription_Pricing[]
+  PricingDetails Subscription[]
 }
 
 model Food_Items {

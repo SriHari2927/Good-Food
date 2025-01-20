@@ -109,7 +109,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './IndividualPackLunch.css';
 import { IoSunnyOutline } from "react-icons/io5";
 import idly from '../../../assets/idly.jpg'
@@ -119,17 +119,38 @@ import chappathi from '../../../assets/chappathi.jpg'
 import pongal from '../../../assets/pongal.jpg'
 import StarRatings from '../Home/StarRatings';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 const IndividualPackLunch = () => {
 
-  const [addedItems, setAddedItems] = useState({
-    idly: 0,
-    pongal: 0,
-    rice: 0,
-    biriyani: 0,
-    chappathi: 0,
-  });
+  
+  const [plans, setPlans] = useState([]);
+  const [addedItems, setAddedItems] = useState({}); 
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const plansData = response.data.groupedSubscriptions?.['Individual Budget']?.Lunch || [];
+        setPlans(plansData);
+        setLoading(false); 
+        console.log("Response : " , response.data)
+      } catch (error) {
+        console.error('Error fetching subscription plans:', error.response?.data || error.message);
+        setPlans([]);
+        setLoading(false); 
+      }
+    };
+
+    fetchPlans();
+  }, []);
 
   const handleQuantityChange = (item, operation) => {
     setAddedItems((prevState) => {
@@ -151,10 +172,20 @@ const IndividualPackLunch = () => {
         <div className='listt'>Choose your Subscription Plans </div>
         <br /><br />
       
-        <div className='days'> 
-          <div> 1 Day - ₹100</div> 
-          <div> 15 Days - ₹90 </div>
-          <div> 30 Days - ₹80 </div>
+        <div className='days'>
+          {loading ? (
+            <div>Loading plans...</div>
+          ) : (
+            plans.length > 0 ? (
+              plans.map((plan, index) => (
+                <div key={index} className="plan-card">
+                  {plan.days} Day = ₹{plan.price}
+                </div>
+              ))
+            ) : (
+              <div>No plans available</div>
+            )
+          )}
         </div>
 
         <div className='break'> 

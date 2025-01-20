@@ -1,0 +1,13 @@
+.days {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+ 
+  
+
+  

@@ -12,7 +12,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-const IndividualPack = () => {
+
+const EliteCombo = () => {
  
   const [addedItems, setAddedItems] = useState({}); 
   const [error, setError] = useState("");
@@ -29,7 +30,7 @@ const IndividualPack = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        const plansData = response.data.groupedSubscriptions?.['Combo Budget']?.Combo || [];
+        const plansData = response.data.groupedSubscriptions?.['Combo Elite']?.Combo || [];
         setPlans(plansData);
         setLoading(false);
         console.log('Fetched Plans:', plansData);
@@ -46,7 +47,6 @@ const IndividualPack = () => {
  
   const handlePlanClick =  async (subscription_id) => {
     try {
-      console.log("ABCD",subscription_id)
       const token = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
@@ -101,7 +101,6 @@ const IndividualPack = () => {
           ))
         )}
       </div>
-      
 
 
 
@@ -280,7 +279,7 @@ const IndividualPack = () => {
   )
 }
 
-export default IndividualPack
+export default EliteCombo
 
 
 

@@ -16,9 +16,11 @@ const subscriptionPaymentRoutes = require('./routes/subscriptionPayment.routes')
 const parentPlanRoutes = require('./routes/parentPlan.routes')
 const userSubscriptionRoutes = require('./routes/userSubscription.routes')
 const tierRoutes = require('./routes/tier.routes')
-const durationQtyRoutes = require('./routes/durationQty.routes')
 const pricingRoutes = require('./routes/pricing.routes')
 const subscriptionPricingRoutes = require('./routes/subscriptionPricing.routes')
+const durationRoutes = require('./routes/duration.routes')
+const quantityRoutes = require('./routes/quantity.routes')
+
 const app = express();
 var morgan = require('morgan')
 const port = 5001
@@ -55,9 +57,10 @@ app.use('/subsPay',subscriptionPaymentRoutes)
 app.use('/parentPlan',parentPlanRoutes)
 app.use('/userSubscription',userSubscriptionRoutes)
 app.use('/tier',tierRoutes)
-app.use('/qty',durationQtyRoutes)
+app.use('/duration',durationRoutes)
 app.use('/price',pricingRoutes)
 app.use('/subPrice',subscriptionPricingRoutes)
+app.use('/quantity',quantityRoutes)
 
 app.listen(port, () => {
     console.log("Server is Running on port " + port)

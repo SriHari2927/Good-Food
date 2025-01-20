@@ -3,9 +3,9 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 
-const getDurationQuty = async(req,res) => {
+const getQuantity = async(req,res) => {
     try {
-        const getQty = await prisma.duration_qty.findMany()
+        const getQty = await prisma.quantity.findMany()
         res.status(400).json({message : "Success",getQty})
     } catch (error) {
         console.log(error)
@@ -13,12 +13,12 @@ const getDurationQuty = async(req,res) => {
     }
 }
 
-const createDurationQty = async(req,res) => {
+const createQuantity = async(req,res) => {
     try {
-        const{days} = req.body
-       const newQty = await prisma.duration_qty.create({
+        const{quantity} = req.body
+       const newQty = await prisma.quantity.create({
         data : {
-            days,
+            quantity,
             created_at : new Date(),
             updatedAt : new Date()
         }
@@ -31,4 +31,4 @@ const createDurationQty = async(req,res) => {
 }
 
 
-module.exports = {getDurationQuty,createDurationQty}
+module.exports = {getQuantity,createQuantity}
