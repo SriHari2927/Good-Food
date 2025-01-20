@@ -1,5 +1,4 @@
 import React, {  useEffect, useState } from 'react';
-import './IndividualPack.css';
 import { IoSunnyOutline, IoPartlySunnyOutline } from "react-icons/io5";
 import { MdOutlineModeNight } from "react-icons/md";
 import idly from '../../../assets/idly.jpg';
