@@ -1,18 +1,18 @@
 const express = require('express')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
-
+ 
+ 
 const getAllSubscription = async (req,res) => {
     try {
         const getSubs = await prisma.subscription.findMany()
         res.status(200).json({message : "All Subscription fetched",getSubs})
     } catch (error) {
        console.log(error)
-       res.status(404).json({error : "No Subscriptions found"}) 
+       res.status(404).json({error : "No Subscriptions found"})
     }
 }
-
+ 
 const getSubscription = async (req,res) => {
 try {
     const getSUB = await prisma.subscription.findMany({
@@ -27,7 +27,6 @@ try {
     res.status(404).json({error : "Subscriptions not found "})
 }
 }
-
 const getSubscriptionNames = async (req, res) => {
     try {
       const getSUB = await prisma.subscription.findMany({
@@ -85,7 +84,6 @@ const getSubscriptionNames = async (req, res) => {
 //       if (mealType) {
 //           filterConditions.MealSub = { meal_type: mealType };
 //       }
-
 //       const getSUB = await prisma.subscription.findMany({
 //           where: filterConditions,
 //           include: {

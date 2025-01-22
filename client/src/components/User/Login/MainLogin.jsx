@@ -16,7 +16,6 @@ const MainLogin = () => {
     setShowPopup(!showPopup);
   };
 
-
   const handleClosePopup = () => {
     setShowPopup(false);
   };
@@ -38,19 +37,9 @@ const MainLogin = () => {
     }
   };
 
-  
 
   return (
     <>  
-
-    {/* <Link to={'/admin/addsubscription'}> 
-    <button> ADMIN</button> </Link> 
-    <div className='background'> 
-    <div className='sign-in'> 
-    <div onClick={handlePopup}> Sign In  </div>
-    </div>
-    {showPopup && <LoginPopup onClose={handleClosePopup} />}
-    </div> */}
 
       <Link to={'/admin/addsubscription'}>
         <button>ADMIN</button>

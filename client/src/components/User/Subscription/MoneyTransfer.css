@@ -1,0 +1,43 @@
+.paymentpage{
+    margin-top: 15rem;
+}
+
+
+.paycash button{
+    width: 5rem;
+    height: 2.3rem;
+    justify-content: center;
+    margin-left: 10rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: rgb(66, 66, 234);
+    color: white;
+    border: none;
+   
+}
+
+.paycash button:hover{
+    background-color: rgb(29, 29, 110);
+}
+
+.payment-method div{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: rgb(66, 66, 234);
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+
+.subscription-detailss {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  

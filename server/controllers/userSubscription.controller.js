@@ -1,8 +1,8 @@
 const express = require('express')
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient();
-
-
+ 
+ 
 const getUserSubscription = async(req,res) => {
   try {
     const getSubscriptions = await prisma.user_Subscription.findMany()
@@ -12,10 +12,9 @@ const getUserSubscription = async(req,res) => {
     res.status(404).json({error : "No user subscriped"})
   }
 }
-
 const getUserSubscriptionDetails = async (req, res) => {
   try {
-    const { customer_id } = req.user; 
+    const {customer_id}=req.user;
     const userSubscriptions = await prisma.user_Subscription.findMany({
       where: { customer_id },
       
@@ -36,49 +35,43 @@ const getUserSubscriptionDetails = async (req, res) => {
         }
       }
     });
-
    console.log("User Deatils" , userSubscriptions)
-
     res.status(200).json({ message: "User Subscription Details fetched", userSubscriptions });
   } catch (error) {
     console.error("Error fetching user subscription details:", error);
     res.status(500).json({ error: error.message || "Failed to fetch user subscription details" });
   }
 };
-
-const getSubscriptionById = async (req, res) => {
+const getSubscriptionDetailsById = async (req, res) => {
   try {
-    const { id } = req.params; 
-    console.log("Fetched Id :" , id)
-    const subscription = await prisma.subscription.findUnique({
-      where: { id: parseInt(id,10) },
+    const {subscription_id} = req.body;
+    const subscription = await prisma.subscription.findMany({
+      where : {id : subscription_id},
+  
       include: {
         DurationSub: { select : {quantity : true}},
-        DurationSubs: {
+        DurationSubs : {
           select : {
-          actual_days : true,
-          addon_days : true
-        }
-      },
-        MealSub: {select : {meal_type : true}},
+            addon_days : true,
+            actual_days : true
+          }
+        },
         PricingDetails: {select : {price : true}},
+        Subscription : {select : {start_date : true, end_date : true}}
       },
     });
-
    
-
     res.status(200).json({ message: 'Subscription details fetched', subscription });
   } catch (error) {
     console.error('Error fetching subscription by ID:', error);
     res.status(500).json({ error: 'Failed to fetch subscription details' });
   }
 };
-
-
+ 
 const createUserSubscription = async (req, res) => {
   try {
     const { subscription_id } = req.body;
-    
+   
     const { customer_id } = req.user;
     console.log("Subscription ID :", subscription_id);
     const subscription = await prisma.subscription.findUnique({
@@ -86,7 +79,7 @@ const createUserSubscription = async (req, res) => {
         id : subscription_id
       },
     });
-
+ 
     const subscriptionData = await prisma.subscription.findMany({
       where: { id: subscription.id },
       include: {
@@ -101,26 +94,26 @@ const createUserSubscription = async (req, res) => {
         PricingDetails : {select : {price : true}}
       },
     });
-
+ 
    
     const durationSub = subscriptionData[0].DurationSub;
     const durationSubs = subscriptionData[0].DurationSubs;
-
+ 
     const quantity = durationSub?.quantity;
     const actual_days = durationSubs?.actual_days;
     const addon_days = durationSubs?.addon_days;
-
+ 
    
     const validity = actual_days + addon_days;
-
+ 
     const start_date = new Date();
     const end_date = new Date(start_date);
     end_date.setDate(start_date.getDate() + quantity);
-
+ 
     console.log("Start Date:", start_date.toISOString().split("T")[0]);
     console.log("End Date:", end_date.toISOString().split("T")[0]);
     console.log("Validity Days:", validity);
-
+ 
     const createSubscription = await prisma.user_Subscription.create({
       data: {
         subscription_id : subscription.id,
@@ -140,5 +133,5 @@ console.log("Creation of Sub",createSubscription)
     res.status(500).json({ error: error.message || "Subscription creation failed" });
   }
 };
-
-module.exports = {getUserSubscription,getSubscriptionById,getUserSubscriptionDetails,createUserSubscription}
+ 
+module.exports = {getUserSubscription,getSubscriptionDetailsById,getUserSubscriptionDetails,createUserSubscription}

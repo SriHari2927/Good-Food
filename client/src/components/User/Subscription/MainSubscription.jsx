@@ -44,7 +44,6 @@ const MainSubscription = () => {
               <button>View</button>
             </Link>
           </h2>
-
           <h2 className="combooo">
             Combo Elite Plan <br />
             <Link to="/user/IndividualPack">
@@ -54,10 +53,10 @@ const MainSubscription = () => {
         </div>
       </div>
   
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <button className="close-btn" onClick={closeModal}>X</button>
+            <button className="close-btnn" onClick={closeModal}>X</button>
      
             <table className="styled--table">
               <thead>
@@ -92,7 +91,7 @@ const MainSubscription = () => {
             </table>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

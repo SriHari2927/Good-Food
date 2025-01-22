@@ -39,15 +39,14 @@ CREATE TABLE `User_Position` (
 -- CreateTable
 CREATE TABLE `User_Address` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `address` VARCHAR(191) NOT NULL,
-    `city` VARCHAR(191) NOT NULL,
-    `street` VARCHAR(191) NOT NULL,
-    `area` VARCHAR(191) NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `phone_number` VARCHAR(191) NOT NULL,
     `landmark` VARCHAR(191) NOT NULL,
-    `pincode` INTEGER NOT NULL,
-    `phone` INTEGER NOT NULL,
-    `alternate_phone` INTEGER NOT NULL,
-    `user_details_id` INTEGER NOT NULL,
+    `street` VARCHAR(191) NOT NULL,
+    `city` VARCHAR(191) NOT NULL,
+    `pincode` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -202,10 +201,7 @@ ALTER TABLE `Phone_Number` ADD CONSTRAINT `Phone_Number_user_id_fkey` FOREIGN KE
 ALTER TABLE `User_Position` ADD CONSTRAINT `User_Position_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `User_Address` ADD CONSTRAINT `User_Address_user_details_id_fkey` FOREIGN KEY (`user_details_id`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `User_Subscription` ADD CONSTRAINT `User_Subscription_validity_days_fkey` FOREIGN KEY (`validity_days`) REFERENCES `Duration`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `User_Subscription` ADD CONSTRAINT `User_Subscription_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_parent_plan_id_fkey` FOREIGN KEY (`parent_plan_id`) REFERENCES `Parent_Plan`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

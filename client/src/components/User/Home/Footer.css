@@ -1,31 +1,47 @@
 
-.footer a:hover {
-  color: orangered;
-
-}
-
-.footer{
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background-color: rgb(77, 38, 63);
-  margin-left: 0rem;
-  padding: 14px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
   color: white;
-  margin-top: 5.7rem;
-
+  z-index: 1000;
+  text-decoration: none;
+  margin-left: 0rem;
+ 
+  
 }
 
 .footer div {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap; 
+  text-decoration: none;
+  color: inherit; 
+  font-size: 12px;
+  cursor: pointer;
+  font-size: 17px;
 }
 
 .footer a {
-  text-decoration: none;
-  color: rgb(22, 21, 21);
-  color: white;
+  color: inherit; 
+  
 }
+
+.footer div:hover {
+  color: rgb(225, 222, 222);
+  
+}
+
+
+
 
 
 @media (max-width:768px) {
@@ -34,9 +50,20 @@
     justify-content: center;
     align-items: center;
     gap: 40px;
+    gap: 20px;
   }
   .footer div{
     display:inline;
   }
   
 }
+
+
+
+
+
+
+
+
+
+

@@ -74,11 +74,11 @@ img{
 
 }
 .breakfast-outt{
-  background-color: rgb(12, 13, 13);
+ 
   background-color:  rgb(107, 56, 89);
   border-radius: 5px;
   padding: 0.4rem;
-  min-width: 22rem;
+  /* min-width: 22rem; */
   text-align: center;
   font-size: 1.2rem;
   color: orangered;
@@ -98,7 +98,6 @@ img{
   height: 2rem; 
   border-radius: 2px;
   font-size: 1.2rem;
-  background-color:  rgb(36, 97, 16);
   background-color: orangered;
   color: white;
   border: none;  
@@ -161,12 +160,14 @@ img{
 
 
 .days-align{
+  display: flex;
   text-align: center;
   background-color:rgb(151, 200, 244);
   width: fit-content;
   padding: 0.2rem;
   margin-left: 3rem;
   font-weight: bold;
+  justify-content: center;
 }
 
 
@@ -189,7 +190,7 @@ img{
 
   .photo {
       margin-left: 0;
-      margin-top: 1rem;
+      margin-top: 4rem;
       flex-direction: column;
       gap: 1rem;
   }
@@ -198,6 +199,15 @@ img{
       font-size: 1.6rem;
       margin-left: 1.3rem;
   }
+ 
+  
+ span.fastt{
+  
+  font-size: 1.4rem;
+  padding-right: 1rem;  
+  color: rgb(242, 241, 246);
+ 
+}
 
   .add button {
       font-size: 1rem;
@@ -213,8 +223,12 @@ img{
   }
 
   .breakfast-outt {
-      min-width: 18rem;
-      font-size: 1rem;
+     
+      font-size: 1.2rem;
+      padding: 1rem;
+      margin-left: 9px;
+      margin-right: 9px; 
+      
   }
 
   .sub-add button {
@@ -238,5 +252,19 @@ img{
       text-align: center;
       margin-top: 2rem;
      
+  }
+  .days-align{
+    display: flex;
+    text-align: center;
+    background-color:rgb(151, 200, 244);
+    width: fit-content;
+    padding: 0.2rem;
+    font-weight: bold;
+    justify-content: center;
+    margin-left: 0%;
+    font-size: 1.3rem;
+  }
+  h6{
+    font-size: 1.4rem;
   }
 }

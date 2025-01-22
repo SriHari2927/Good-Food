@@ -118,15 +118,15 @@ import biriyani from '../../../assets/biriya.jpg'
 import chappathi from '../../../assets/chappathi.jpg'
 import pongal from '../../../assets/pongal.jpg'
 import StarRatings from '../Home/StarRatings';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 const IndividualPackLunch = () => {
+ 
 
   
   const [plans, setPlans] = useState([]);
-  const [addedItems, setAddedItems] = useState({}); 
 
   const [loading, setLoading] = useState(true);
 
@@ -152,23 +152,65 @@ const IndividualPackLunch = () => {
     fetchPlans();
   }, []);
 
-  const handleQuantityChange = (item, operation) => {
-    setAddedItems((prevState) => {
-      const newQuantity = operation === 'increment'
-        ? prevState[item] + 1
-        : prevState[item] > 0 ? prevState[item] - 1 : 0; 
-      return { ...prevState, [item]: newQuantity };
-    });
+  const [isSignedIn, setIsSignedIn] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  
+  const handleSignIn = () => {
+    setIsSignedIn(true); 
+    setShowModal(false);
+    navigate('/user/Payment');
+    
   };
 
+  const onClose = () => {
+    setShowModal(false);
+  }; 
+ 
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+ 
+        const plansData = response.data.groupedSubscriptions?.['Individual Budget']?.Lunch || [];
+        setPlans(plansData);
+        setLoading(false);
+        console.log("Response : " , response.data)
+      } catch (error) {
+        console.error('Error fetching subscription plans:', error.response?.data || error.message);
+        setPlans([]);
+        setLoading(false);
+      }
+    };
+ 
+    fetchPlans();
+  }, []);
+ 
+ 
+
+  const handleSubscribe = () => {
+    if (!isSignedIn) {
+      setShowModal(true);
+      return;
+    }
+    navigate('/user/Payment');
+  };
+ 
   return (
-    <> 
-      <div className='backgrd'> 
-        <Link to={'/user/Payment'}> 
+    <>
+      <div className='backgrd'>
+        {/* <Link to={'/user/Payment'}>
           <div className='sub-add'>
-            <button> SUBSCRIBE</button>
-          </div>
-        </Link>
+            <button onClick={handleSubscribe}>SUBSCRIBE</button>
+          </div>         
+        </Link> */}
+        <div className='sub-add'>
+          <button onClick={handleSubscribe}>SUBSCRIBE</button>
+        </div>
         <div className='listt'>Choose your Subscription Plans </div>
         <br /><br />
       
@@ -187,8 +229,8 @@ const IndividualPackLunch = () => {
             )
           )}
         </div>
-
-        <div className='break'> 
+ 
+        <div className='break'>
           <div className='breakfast-outt'>
             <IoSunnyOutline />
             <span className='fastt'> Lunch </span>
@@ -196,51 +238,38 @@ const IndividualPackLunch = () => {
           </div>
         </div>
 
-        <div className='photo'> 
-         
-          {[
-            { name: 'idly', image: idly, description: 'Idly + chutney + sambar' },
-            { name: 'pongal', image: pongal, description: 'Pongal + sambar + vada' },
-            { name: 'rice', image: rice, description: 'Rice + Chicken gravy' },
-            { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani' },
-            { name: 'chappathi', image: chappathi, description: 'Chappathi' }
+        <div className='photo'>
+          {[{ name: 'idly', image: idly, description: 'Idly+chutney+sambar', day: 'Monday' },
+            { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Tuesday' },
+            { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Wednesday' },
+            { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', day: 'Thursday' },
+            { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Friday' },
+            { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Saturday' },
+            { name: 'chappathi', image: chappathi, description: 'Chappathi', day: 'Sunday' }
           ].map((item) => (
             <div key={item.name}>
-              <img src={item.image} alt={item.name} /><br />
-              <h6>{item.description} <br /> <StarRatings /></h6>
-
-              <div className='add'>
-                {addedItems[item.name] > 0 ? (
-                  <div className="quantity-container">
-                    <button 
-                      onClick={() => handleQuantityChange(item.name, 'decrement')}
-                      aria-label={`Decrease quantity of ${item.name}`}
-                    >
-                      -
-                    </button>
-                    <span>{addedItems[item.name]}</span>
-                    <button 
-                      onClick={() => handleQuantityChange(item.name, 'increment')}
-                      aria-label={`Increase quantity of ${item.name}`}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <button 
-                    onClick={() => handleQuantityChange(item.name, 'increment')}
-                    aria-label={`Add ${item.name}`}
-                  >
-                    Add
-                  </button>
-                )}
-              </div>
+              <div className='days-align'>{item.day}</div>
+              <br />
+              <img src={item.image} alt={item.name} />
+              <br />
+              <h6>{item.description} <br /><StarRatings /></h6>
+   
             </div>
           ))}
         </div>
       </div>
+
+      {showModal && (
+        <div className="modaal-overlay">
+          <div className="modaal">
+          <button className="close-btnn" onClick={onClose}>X</button>
+            <h3  className="sign-in-subscribe "style={{marginTop:'1rem'}}>Please Sign In to Subscribe</h3>
+            <button onClick={handleSignIn} className="sign-inn-btn">   Sign In with Google   </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
-
+ 
 export default IndividualPackLunch;

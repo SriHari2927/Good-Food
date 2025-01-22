@@ -1,8 +1,18 @@
-sub-details{
+
+.sub-status{
     display: flex;
-    text-align: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.8rem;
-    margin-top: 3rem;
+    /* flex-direction: column; */
+    margin-left: 9rem;
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .sub-status{
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+
 }

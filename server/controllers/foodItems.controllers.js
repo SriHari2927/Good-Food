@@ -15,18 +15,22 @@ try {
 const createFoodItems = async(req,res) => {
     try {
         const {item_name,item_type,description,price_id,image_url} = req.body
-        const createFood = await prisma.food_Items.create({
-            data : {
-                item_name,
-                item_type,
-                description,
-                price_id,
-                image_url,
-                created_at : new Date(),
-                updatedAt : new Date()
-            }
-        })
-        res.status(200).json({message : "Food Item created",createFood})
+
+        
+
+
+       const newFood = await prisma.food_Items.create({
+        data : {
+            item_name,
+            item_type,
+            description,
+            price_id,
+            image_url,
+            created_at : new Date(),
+            updatedAt: new Date()
+        }
+       })
+        res.status(200).json({message : "Food Item created",newFood})
     } catch (error) {
         console.log(error)
         res.status(404).json({error : "No food items added "})

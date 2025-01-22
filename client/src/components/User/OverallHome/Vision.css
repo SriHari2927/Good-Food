@@ -1,0 +1,32 @@
+
+.vision-head{
+    font-size: 1.5rem;
+   
+}
+
+.vision-back{
+   
+    background-color: aliceblue;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 1rem;   
+}
+
+
+@media (max-width: 768px) {
+
+.vision-head {
+    font-size: 1.2rem;
+  }
+
+  .vision-back {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 1rem; 
+  }
+
+  .vision-head {
+    font-size: 1.2rem;
+  }
+}
+

@@ -1,4 +1,4 @@
- 
+
 .choose-plan {
   display: flex;
   gap: 2rem;
@@ -92,8 +92,9 @@
   height: 40%;
 }
 
-.close-btn {
+.close-btnn {
   background-color: #f44336;
+ 
   color: white;
   border: none;
   padding: 3px;

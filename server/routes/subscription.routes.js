@@ -5,6 +5,7 @@ const router = express.Router();
 router.get('/getAllSub',getAllSubscription)
 router.get('/names',getSubscriptionNames)
 router.get('/getSUB',getSubscription)
+router.get('/names',getSubscriptionNames)
 router.post('/createSub',createSubscription)
 
 module.exports = router;

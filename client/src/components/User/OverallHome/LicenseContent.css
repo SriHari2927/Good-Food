@@ -1,0 +1,107 @@
+/* .vision-head{
+    font-size: 1.5rem;
+   
+}
+
+.vision-back{
+   
+    background-color: aliceblue;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 1rem;   
+} */
+
+.signing-in{
+  display: flex;
+  justify-content: end;
+  margin-top: 2rem;
+  margin-right: 5rem;  
+}
+
+.signing-in button{
+  padding: 0.5rem;
+  border-radius: 2rem; 
+  width: 9rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: rgb(113, 69, 69); 
+  color: white;
+
+  
+}
+
+
+.signing-in button:hover{
+ 
+  background-color: rgb(113, 69, 69);
+  background-color: darkslategrey;
+  background-color: brown;
+  color: white;
+  font-weight: bold;
+}
+
+.home-header{
+  
+  margin-top: 4rem;
+  font-size: 2.1rem;   
+}
+
+.vm-box{
+  margin-top: 3rem;
+  display: flex;
+
+}
+
+.food-delivery{
+  margin-left: 7rem;
+
+}
+
+.register{
+  margin-top: 3rem;
+  width: fit-content;
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  gap: 2rem;
+  margin-left: 1.3rem;
+}
+
+.register div{
+  background-color: rgb(113, 69, 69);
+  padding: 1.4rem;
+  color: white;
+  border-radius: 8px;  
+}
+
+.regi{
+  width: fit-content;
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  gap: 2rem;
+  margin-left: 1.3rem;
+  
+}
+
+.regi div{
+
+  padding: 1.3rem;
+  color: white;
+  background-color: darkslategrey;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  
+         .home-header{
+        display: flex;
+        justify-content: start;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        margin-right: 1rem;
+        font-size: 2.1rem;   
+      }
+    }    

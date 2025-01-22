@@ -1,23 +1,23 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+ 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+ 
 generator client {
   provider = "prisma-client-js"
 }
-
+ 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
+ 
 enum ItemType {
   Veg
   Non_Veg
 }
-
+ 
 enum MealType {
   Breakfast
   Lunch
@@ -25,20 +25,17 @@ enum MealType {
   Combo
 }
 
-// enum Plan {
-//   Individual
-//   Combo
-// }
+
  
 enum tier {
   Budget
   Elite
 }
-
-
+ 
+ 
 model Users {
   id Int @id @default(autoincrement())
-  customer_id String @unique
+  customer_id String 
   username String
   email String @unique
   display_picture String?
@@ -46,10 +43,9 @@ model Users {
   updatedAt DateTime
   UserNumber Phone_Number[]
   UserPosition User_Position[]
-  UserAddress User_Address[]
   SubscriptionPayment Subscription_Payment[]
 }
-
+ 
 model Phone_Number {
   id Int @id @default(autoincrement())
   user_id Int
@@ -59,7 +55,7 @@ model Phone_Number {
   created_at DateTime
   UserNumber Users @relation(fields: [user_id],references: [id])
 }
-
+ 
 model User_Position {
   id Int @id @default(autoincrement())
   position String
@@ -68,36 +64,34 @@ model User_Position {
   updatedAt DateTime
   Users Users @relation(fields: [user_id],references: [id])
 }
-
+ 
 model User_Address {
   id Int @id @default(autoincrement())
-  address String
-  city String
-  street String
-  area String
+  customer_id String
+  name String
+  email String
+  phone_number String
   landmark String
-  pincode Int
-  phone Int
-  alternate_phone Int
-  user_details_id Int
+  street String
+  city String
+  pincode String
   created_at DateTime
   updatedAt DateTime
-  UserDetails Users @relation(fields: [user_details_id],references: [id])
 }
-
-model User_Subscription { 
+ 
+model User_Subscription {
   id Int @id @default(autoincrement())
-  subscription_id Int 
+  subscription_id Int
   start_date DateTime
   end_date DateTime
   status String
-  customer_id String 
+  customer_id String
   validity_days Int
   created_at DateTime
   updatedAt DateTime
   Subscription Subscription @relation(fields: [subscription_id],references: [id])
 }
-
+ 
 model Subscription {
   id                 Int                  @id @default(autoincrement())
   parent_plan_id     Int
@@ -118,7 +112,7 @@ model Subscription {
   PricingDetails Pricing_Details @relation(fields: [price_id],references: [id])
   Subscription User_Subscription[]
 }
-
+ 
 model Tier {
   id Int @id @default(autoincrement())
   type tier
@@ -126,7 +120,7 @@ model Tier {
   updatedAt DateTime
   TierSub Subscription[]
 }
-
+ 
 model Quantity {
   id Int @id @default(autoincrement())
   quantity Int
@@ -134,7 +128,7 @@ model Quantity {
   updatedAt DateTime
   DurationSub Subscription[]
 }
-
+ 
 model Duration {
   id Int @id @default(autoincrement())
   actual_days Int
@@ -142,9 +136,9 @@ model Duration {
   created_at DateTime
   updatedAt DateTime
   DurationSubs Subscription[]
-
+ 
 }
-
+ 
 model Parent_Plan {
   id         Int       @id @default(autoincrement())
   plan_name       String
@@ -152,9 +146,9 @@ model Parent_Plan {
   updatedAt  DateTime  @updatedAt
   subscriptions Subscription[]
 }
-
-
-
+ 
+ 
+ 
 model Subscription_Payment {
   id                     Int      @id @default(autoincrement())
   payment_method         String
@@ -166,7 +160,7 @@ model Subscription_Payment {
   SubscriptionPayment    Subscription @relation("SubscriptionToPayment", fields: [subscription_id], references: [id])
   SubscriptionPaymentUsers Users        @relation(fields: [user_id], references: [id])
 }
-
+ 
 model Subscription_Pricing {
   id Int @id @default(autoincrement())
   subscription_id Int
@@ -182,8 +176,9 @@ model Pricing_Details {
   updatedAt DateTime
   PricingSub Subscription_Pricing[]
   PricingDetails Subscription[]
+  priceDescriptions Food_Items[]
 }
-
+ 
 model Food_Items {
   id Int @id @default(autoincrement())
   item_name String
@@ -193,8 +188,9 @@ model Food_Items {
   image_url String?
   created_at DateTime
   updatedAt DateTime
+  priceDescription Pricing_Details @relation(fields: [price_id],references: [id])
 }
-
+ 
 model Subscription_Food_Menu {
   id Int @id @default(autoincrement())
   subscription_id Int
@@ -202,7 +198,7 @@ model Subscription_Food_Menu {
   created_at DateTime
   updatedAt DateTime
 }
-
+ 
 model Meal_type {
   id Int @id @default(autoincrement())
   meal_type MealType
@@ -210,3 +206,5 @@ model Meal_type {
   updatedAt DateTime
   MealSub Subscription[]
 }
+
+

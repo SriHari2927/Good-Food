@@ -6,18 +6,16 @@ const googleCallback = (req, res) => {
 
   const token = generateToken(user);
  
-  console.log(user)
+  console.log("USER",user)
 
-  console.log(token)
+  console.log("TOKEN",token)
   
-  res.redirect(`${process.env.CLIENT_URL}/user/LoginPopup/?token=${token}`)
+  res.redirect(`${process.env.CLIENT_URL}/?token=${token}`)
 };
-
 
 const failure = (req, res) => {
   res.send('Failed...!');
 };
-
 
 module.exports = { googleCallback, failure };
 

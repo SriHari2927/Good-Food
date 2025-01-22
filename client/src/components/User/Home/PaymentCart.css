@@ -14,11 +14,131 @@
     padding-right: 1rem;
     border-radius: 3px;
     margin-left: 0.5rem;
-    margin-top: 2rem;
+    margin-left: 4rem;    
         
 }
+
 .place-order-item{
-    margin-left: 15rem;
-    font-weight: bold;
+    margin-left: 18rem;
+    font-weight: bold;  
    
 }
+
+
+
+
+
+/* Basic styles */
+.details-back {
+    padding: 20px;
+  }
+  
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .address-fontsize textarea,
+  .address-fontsize input {
+    width: 91.5%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 0.3rem;
+  }
+  
+  .subscription-details {
+    margin-bottom: 20px;
+  }
+  
+  .payment-method div {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .responsive-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .update-profile button {
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .address-fontsize div{
+   
+    margin-left: 3.2rem;
+  }
+
+  .editt{
+    font-weight: bold;
+  }
+
+  .editt:hover{
+    color: white;
+    font-size: 1.1rem;
+  }
+
+  
+  /* Media Queries for Mobile */
+  @media screen and (max-width: 768px) {
+    .form-container {
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 1.5rem; /* Smaller heading */
+    }
+  
+    .address-fontsize textarea,
+    .address-fontsize input {
+      font-size: 0.9rem;
+      padding: 8px;
+      
+    }
+  
+    .subscription-details {
+      font-size: 0.9rem;
+    }
+  
+    .responsive-button {
+      font-size: 0.9rem;
+      padding: 12px;
+    }
+  
+    .place-order-item {
+      font-size: 1rem;
+      padding: 12px;
+      margin-left: 5rem;
+    }
+  
+    /* Adjust Alert position */
+    .MuiAlert-root {
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%; /* Takes up most of the screen width */
+      max-width: 100%;
+    }
+  
+    /* Stack buttons vertically */
+    .update-profile button {
+      width: 100%;
+      margin-bottom: 10px;
+      margin-left: 2px;
+    }
+  
+    .address-fontsize textarea {
+      height: 120px;
+    }
+
+   
+  }
+  
+  

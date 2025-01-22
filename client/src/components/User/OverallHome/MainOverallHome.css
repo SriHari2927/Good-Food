@@ -6,6 +6,9 @@ html {
 .background-imageee{
   background-image: url('../../../assets/foodcolor.png');
   background-size: cover;
+
+  position: fixed;
+  margin-top: 0%;
   
 }
 
@@ -46,19 +49,19 @@ html {
     border-radius: 8px;
 }
 
-.vision-head{
+/* .vision-head{
     font-size: 1.5rem;
    
-}
+} */
 
-.vision-back{
+/* .vision-back{
     background-color: aliceblue;
     margin-left: 2rem;
     margin-right: 2rem;
     padding: 1rem;
    
 
-} 
+}  */
   
   
 .logo-pic{
@@ -77,17 +80,17 @@ html {
     margin-left: 18rem;
 }
 
-.home-header{
-    margin-left: 6rem;
-    margin-top: 6rem;
-    font-size: 2.1rem;   
-}
+
 
 .food{
-   background-image: url('../../../assets/foodcolor.png');
+   background-image: url('../../../assets/foodimage.png');
+   /* background-image: url(../../../assets/sharedimage.png); */
    background-size: cover;
    min-height: 100vh;
-   width: 100%;   
+   width: 100%;  
+   margin-top: 0;
+   position: relative;
+    
 }
 
 .individual-plan{
@@ -154,39 +157,6 @@ html {
     margin-left: 2rem; 
 }
 
-.plans-head{
-    margin-top: 3rem;
-    display: flex;
-    justify-content: space-around;
-}
-
- .comm{
-
-    height: fit-content;
-    width: fit-content;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    background-color: rgb(77, 41, 28);  
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    padding: 2rem;
-    color: white;
-}
-
-.comm button{
-    margin-top: 0.9rem;
-    height: 2rem;
-    width: 4rem;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.comm button :hover{
-    background-color: rgb(240, 119, 33);
-    cursor: pointer;
-}
-
 .contact-details{
     display: flex;
     justify-content: center;
@@ -242,7 +212,7 @@ html {
     border-radius: 8px;
 }
 
-.feedback-submit{
+/* .feedback-submit{
     height: fit-content;
     width: fit-content;
     padding: 0.5rem;
@@ -254,7 +224,7 @@ html {
     border: none;
     margin-left: 13rem;
     margin-right: 13rem;
-}
+} */
 
 
 
@@ -272,7 +242,7 @@ html {
   }
   
   
-  .cclose-btn {
+  /* .cclose-btn {
     background-color: #f44336;
     color: white;
     border: none;
@@ -284,14 +254,12 @@ html {
     margin-left: 62.3rem;
     top: 2.2rem;
     padding-left: 6px;
-    padding-right: 6px;
-   
-  } 
+    padding-right: 6px; 
+  }  */
 
   a{
     text-decoration: none;
-    color: black;
-    
+    color: black;  
   }
 
   a:hover{
@@ -309,6 +277,7 @@ html {
   }
 
   .nav-link{
+  
     font-weight: bold;
     font-size: 1.2rem;
   }
@@ -426,43 +395,7 @@ button:hover {
   color: #333;
 }
 
-.modal-title {
-  font-size: 22px;
-  margin-bottom: 20px;
-  color: #444;
-}
 
-.plan-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.plan-table th,
-.plan-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-.plan-table th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-}
-
-.close-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.close-button:hover {
-  background-color: #0056b3;
-}
 
 .food {
   background-image: url('../../../assets/foodcolor.png');
@@ -492,9 +425,47 @@ button:hover {
   border-radius: 5px;
 }
 
+.collapse {
+  margin-left: 35rem;
+}
+
 .nav-link{
   font-size: 1.38rem;
+  color: black;  
 }
+
+
+.break-header{
+  height: 5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.meal-type{
+  background-color: aliceblue;
+  width: 15rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 2rem;
+  padding-top: 1rem;
+
+}
+
+.budget-plan{
+  display: flex;
+  row-gap: 2rem;
+  padding: 1.5rem;
+  background-color: #f44336;
+  border-radius: 8px;
+  width: fit-content;
+  
+}
+
+.budget-plan div{  
+  display: flex;
+  gap: 3rem;
+}
+
 
 @media (max-width: 768px) {
 
@@ -506,12 +477,12 @@ button:hover {
         padding-top: 2rem;    
     }
     
-.home-header{
+/* .home-header{
         display: flex;
         justify-content: center;
         margin-top: 1rem;
         font-size: 1.2rem;  
-    }
+    } */
 
   .regi{
     flex-direction: column;
@@ -526,15 +497,15 @@ button:hover {
     padding: 1rem;
   }
 
-  .vision-back {
+  /* .vision-back {
     margin-left: 0;
     margin-right: 0;
     padding: 1rem; 
-  }
+  } */
 
-  .vision-head {
+  /* .vision-head {
     font-size: 1.2rem;
-  }
+  } */
 
   .com {
     width: 100%;
@@ -555,11 +526,11 @@ button:hover {
     
   }
 
-  .comm {
+  /* .comm {
     width: 100%;
     text-align: center;
     padding: 1rem;
-  }
+  } */
 
   .footer-down {
     flex-direction: column;
@@ -573,25 +544,25 @@ button:hover {
     margin-bottom: 2rem;
   }
 
-  .feedback-head {
+  /* .feedback-head {
     margin-left: 2rem;
     margin-right: 2rem;
-  }
+  } */
 
   .mmodal-content {
     width: 90%;
   }
 
-  .feedback-submit {
+  /* .feedback-submit {
     margin-left: 0;
     margin-right: 0;
-  }
+  } */
 
-  .cclose-btn {
+  /* .cclose-btn {
     margin-left: auto;
     margin-right: auto;
     font-size: 1rem;
-  }
+  } */
 .home-heading{
 
     margin-left: 1rem;
@@ -647,20 +618,166 @@ button:hover {
   height: 4rem;
 }
 
-.home-header {
+/* .home-header {
   margin-left: 1rem;
   margin-top: 2rem;
   font-size: 1.4rem;
-}
+} */
 
 .header-img {
-  /* width: 100%; */
+  
   max-width: 6rem;
   height: auto;
   border-radius: 5px;
 }
 
 
+
+
 } 
+
+
+
+
+
+
+.styled---table {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  border-radius: 5px;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.styled---table th {
+  padding: 15px;
+  background-color: rgb(238, 116, 71);
+  color: #fff;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1.4rem;
+}
+
+.styled---table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.styled---table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.styled---table button {
+  padding: 7px 16px;
+  background-color: rgb(107, 56, 89);
+  font-size: 1.1rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.styled---table button:hover {
+  background-color: #3d39ba;
+}
+
+
+
+.styled---table {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  border-radius: 5px;
+  margin-top: 3rem;
+}
+
+.styled---table th {
+  padding: 15px;
+  background-color: rgb(238, 116, 71);
+  color: #fff;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1.4rem;
+}
+
+.styled---table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.styled---table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.styled---table button {
+  padding: 7px 16px;
+  background-color: rgb(107, 56, 89);
+  font-size: 1.1rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.styled---table button:hover {
+  background-color: #3d39ba;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  .styled---table {
+    width: 100%;
+    border: none;
+  }
+
+  .styled---table thead {
+    display: none; /* Hide the table headers in small screens */
+  }
+
+  .styled---table tr {
+    display: block;
+    margin-bottom: 15px; /* Add space between rows */
+  }
+
+  .styled---table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid #b1a8a8;
+    /* padding: 10px 5px; */
+    padding: 2rem;
+  }
+
+  .styled---table td:before {
+    content: attr(data-label); /* Use the data-label attribute for headings */
+    font-weight: bold;
+    text-align: left;
+    color: rgb(238, 116, 71);
+    flex: 1;
+  }
+
+  .styled---table td:last-child {
+    border-bottom: none; /* Remove border from the last cell */
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 

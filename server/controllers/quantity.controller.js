@@ -12,7 +12,6 @@ const getQuantity = async(req,res) => {
         resizeBy.status(404).json({error : "Quantity not available "})
     }
 }
-
 const createQuantity = async(req,res) => {
     try {
         const{quantity} = req.body
@@ -22,11 +21,11 @@ const createQuantity = async(req,res) => {
             created_at : new Date(),
             updatedAt : new Date()
         }
-       }) 
+       })
        res.status(200).json({message : "Days Added",newQty})
     } catch (error) {
        console.log(error)
-       res.status(404).json({error : "No days added "}) 
+       res.status(404).json({error : "No days added "})
     }
 }
 

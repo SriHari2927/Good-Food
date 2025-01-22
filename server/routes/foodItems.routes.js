@@ -3,6 +3,6 @@ const { getAllFoodItems, createFoodItems } = require('../controllers/foodItems.c
 const router = express.Router();
 
 router.get('/getFood',getAllFoodItems)
-router.post('/createFood',createFoodItems)
+router.post('/newFood',createFoodItems)
 
 module.exports = router;
