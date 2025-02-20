@@ -32,6 +32,10 @@ passport.use(
           },
         });
 
+    
+
+
+
         const customerId = `GF${String(user.id).padStart(3, "0")}`;
 
         if (user.customer_id !== customerId) {

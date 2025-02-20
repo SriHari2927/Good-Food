@@ -233,7 +233,6 @@
  
 // export default MainHome;
 
-
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './MainHome.css';
@@ -241,15 +240,12 @@ import MainNavbar from '../Navbar/MainNavbar';
 import { IoSunnyOutline } from "react-icons/io5";
 import { IoPartlySunnyOutline } from "react-icons/io5";
 import { MdOutlineModeNight } from "react-icons/md";
- 
 import { ImSpoonKnife } from "react-icons/im";
 import { useNavigate, useParams } from 'react-router-dom';
  
- 
- 
 const MainHome = () => {
-    const [foodItems, setFoodItems] = useState([]);
-    const [additionalItems, setAdditionalItems] = useState([]);
+  const [foodItems, setFoodItems] = useState([]);
+  const [additionalItems, setAdditionalItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const { id } = useParams();
   const [cart, setCart] = useState([]);
@@ -392,6 +388,12 @@ const MainHome = () => {
               )
               .map((item, index) => (
                 <div key={index} className="food-item">
+<div className='food-image'>
+            <img src={item.image_url || "https://via.placeholder.com/50"}
+            //  alt={item.item_name}
+            //  className="food-item-image"          
+            />
+            </div>
                   <span>{item.item_name}</span>
                   <div className="food-item-actions">
                     <button onClick={() => handleRemoveItem(item)}>-</button>
@@ -431,10 +433,8 @@ const MainHome = () => {
         )}
       </div>
  
-      <br/>
-      <br/>
-      <br/>
-      <br/>
+      <div className='bottom'>
+      </div>
  
     </>
   );
