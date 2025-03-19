@@ -1,4 +1,4 @@
-
+/* 
 .order-summary {
     background-color: #fff;
     padding: 15px;
@@ -128,4 +128,145 @@ label{
 
 .delivery-header{
   margin-top: 2rem;
+} */
+
+
+
+
+
+ 
+.form-group span{
+  font-weight: lighter;  
 }
+ 
+ 
+.foodd-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+ 
+.foodd {
+  flex: 1;
+  background: #f9f9f9;
+  background-color: rgb(253, 255, 255);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+}
+ 
+.foodd h2 {
+  font-size: 25px;
+  margin-bottom: 15px;
+  color: orangered;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+ 
+.subscription-details,
+.food-delivery-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+ 
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+ 
+.form-group label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+ 
+.form-group input {
+  flex: 2;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+ 
+.address-box {
+  background: #fff;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+ 
+.add-address-btn {
+  background-color: #714545;
+  color: white;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+ 
+.submit-bttn {
+  background-color: #714545;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+ 
+}
+ 
+.submit-color {
+  display: block;
+  width: 100%;
+  background-color: #ff4500;
+  background-color: #714545;
+  color: white;
+  padding: 13px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 95px;
+}
+ 
+ 
+.delivery{
+  color: #ff4500;
+  font-size: 1.3rem;
+ 
+ 
+}
+ 
+@media (max-width: 768px) {
+  .foodd-container {
+    padding: 0.5rem;
+  }
+  .foodd {
+    padding: 1rem;
+  }
+ 
+}
+ 
+@media (max-width: 480px) {
+  .foodd-container {
+    padding: 0.5rem;
+  }
+  .foodd {
+    padding: 1rem;
+  }
+ 
+}
+ 
+ 

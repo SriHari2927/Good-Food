@@ -166,6 +166,10 @@
 //     createSubscription
 // }
 
+
+
+
+
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -228,17 +232,13 @@ const getSubscriptionNames = async (req, res) => {
       include: {
         parentPlan1: { select: { plan_name: true } },
         TierSub: { select: { type: true } },
-        DurationSub: true,
         DurationSubs: { select: { actual_days: true, addon_days: true } },
-
-        MealSub: true,
-
+        MealSub: { select: { meal_type: true } },
         PricingDetails: { select: { price: true } },
       },
     });
 
-
-    // Restructuring the output
+    // Restructuring the response
     const formattedSubscriptions = getSUB.reduce((acc, sub) => {
       const planName = sub.parentPlan1.plan_name;
       const tierType = sub.TierSub.type;
@@ -249,14 +249,17 @@ const getSubscriptionNames = async (req, res) => {
       }
 
       if (!acc[planName][tierType]) {
-        acc[planName][tierType] = [];
+        acc[planName][tierType] = {};
       }
 
-      acc[planName][tierType].push({
+      if (!acc[planName][tierType][mealType]) {
+        acc[planName][tierType][mealType] = [];
+      }
+
+      acc[planName][tierType][mealType].push({
         id: sub.id,
-        days: sub.DurationSubs.actual_days,
-        price: sub.PricingDetails.price,
-        meal_type:mealType
+        days: sub.DurationSubs?.actual_days || "N/A",
+        price: sub.PricingDetails?.price || "N/A",
       });
 
       return acc;
@@ -265,12 +268,94 @@ const getSubscriptionNames = async (req, res) => {
     res.status(200).json({ message: "Subscription found", formattedSubscriptions });
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Subscriptions not found" });
+    res.status(500).json({ error: "Error fetching subscriptions" })
   }
 };
 
 
- 
+
+// const getMeals = async (req, res) => {
+//   try {
+//     const { planName, mealType, tier } = req.params;
+
+//     const meals = await prisma.subscription.findMany({
+//       where: {
+//         parentPlan1: {
+//           plan_name: planName
+//         },
+//         MealSub: {
+//           meal_type: mealType
+//         },
+//         TierSub: {
+//           type: tier
+//         }
+//       },
+//       include: {
+//         FoodSubscription: {
+//           include: {
+//             FoodItems: true
+//           }
+//         }
+//       }
+//     });
+
+//     const foodItems = meals.flatMap((meal) =>
+//       meal.FoodSubscription.map((sub) => sub.FoodItems)
+//     );
+
+//     res.status(200).json({ success: true, foodItems });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Error fetching meals" });
+//   }
+// };
+
+
+const getMeals = async (req, res) => {
+  try {
+    const { planName, mealType, tier } = req.params;
+
+    // Fetch subscriptions that match the criteria
+    const subscriptions = await prisma.subscription.findMany({
+      where: {
+        parentPlan1: {
+          plan_name: planName
+        },
+        MealSub: {
+          meal_type: mealType
+        },
+        TierSub: {
+          type: tier
+        }
+      },
+      include: {
+        FoodSubscription: {
+          include: {
+            FoodItems: true
+          }
+        }
+      }
+    });
+
+    console.log("Fetched Subscriptions: ", JSON.stringify(subscriptions, null, 2));
+
+    // Extract unique food items using a Set
+    const foodItems = new Map();
+
+    subscriptions.forEach((sub) => {
+      sub.FoodSubscription.forEach((menu) => {
+        foodItems.set(menu.FoodItems.id, menu.FoodItems);
+      });
+    });
+
+    res.status(200).json({ success: true, foodItems: Array.from(foodItems.values()) });
+  } catch (error) {
+    console.error("Error fetching meals:", error);
+    res.status(500).json({ success: false, message: "Error fetching meals." });
+  }
+};
+
+
 
  
  
@@ -386,4 +471,5 @@ module.exports = {
   getSubscription,
   createSubscription,
   sendNotificationOnSubscription,
+  getMeals
 };

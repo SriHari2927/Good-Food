@@ -24,24 +24,18 @@ import OverallHome from './Pages/User/OverallHome'
 import ChefOrderList from './Pages/Admin/ChefOrderList';
 import AdminOrderList from './Pages/Admin/AdminOrderList';
 import PaymentCart from './components/User/Home/PaymentCart';
-import EliteCombo from './components/User/Subscription/EliteCombo';
 import FeedItems from './Pages/Admin/FeedItems';
 import IdeasToImprove from './components/User/OverallHome/IdeasToImprove';
 import SignIn from './components/User/OverallHome/SignIn';
 import MoneyTransfer from './components/User/Subscription/MoneyTransfer';
-import BudgetCombo from './components/User/Subscription/BudgetCombo';
 import FeedItemsOption from './components/Admin/FeedItems/FeedItemsOption';
-import IndividualPackBreakfastBudget from './components/User/Subscription/IndividualPackBreakfastBudget';
-import IndividualPackLunchBudget from './components/User/Subscription/IndividualPackLunchBudget';
-import IndividualPackDinnerBudget from './components/User/Subscription/IndividualPackDinnerBudget';
-import IndividualPackBreakfastElite from './components/User/Subscription/IndividualPackBreakfastElite';
-import IndividualPackLunchElite from './components/User/Subscription/IndividualPackLunchElite';
-import IndividualPackDinnerElite from './components/User/Subscription/IndividualPackDinnerElite';
+
 import UserSidebar from './Pages/User/UserSidebar';
 import Wallet from './components/User/Home/Wallet';
 import Notification from './components/User/Home/Notification';
 import Skippedcart from './components/User/Home/Skippedcart';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import PlanDetails from './components/User/Subscription/PlanDetails';
  
  
 const App = () => {
@@ -51,14 +45,8 @@ const App = () => {
    <Routes>
    <Route index element={< OverallHome/>}/>
     <Route path='user' element={<Outlet/> }>    
-    <Route path='IndividualPackBreakfastBudget' element={<IndividualPackBreakfastBudget />}/>
-    <Route path='IndividualPackLunchBudget' element={<IndividualPackLunchBudget />} />
-    <Route path='IndividualPackDinnerBudget' element={<IndividualPackDinnerBudget />} />
-    <Route path='IndividualPackBreakfastElite' element={<IndividualPackBreakfastElite />} />
-    <Route path='IndividualPackLunchElite' element={<IndividualPackLunchElite  />}/>
-    <Route path='IndividualPackDinnerElite' element={<IndividualPackDinnerElite  />} />
-    <Route path='EliteCombo'  element={<EliteCombo />} />
-    <Route path='BudgetCombo' element={< BudgetCombo/>}/>
+    <Route path = ':planName/:planType/:mealType' element = {<PlanDetails />}/>
+
     <Route path='LoginPopup' element={< LoginPopup />}/>
     <Route path='SignIn'  element={<SignIn />} />
  

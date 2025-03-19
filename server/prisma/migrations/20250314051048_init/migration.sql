@@ -119,7 +119,7 @@ CREATE TABLE `Subscription_Payment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `payment_method` VARCHAR(191) NOT NULL,
     `subscription_id` INTEGER NOT NULL,
-    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
     `payment_status` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -167,6 +167,9 @@ CREATE TABLE `Subscription_Food_Menu` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `subscription_id` INTEGER NOT NULL,
     `food_item_id` INTEGER NOT NULL,
+    `parent_plan_id` INTEGER NOT NULL,
+    `tier_id` INTEGER NOT NULL,
+    `meal_type_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -199,9 +202,11 @@ CREATE TABLE `Meal_type` (
 -- CreateTable
 CREATE TABLE `Orders` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `customer_id` VARCHAR(191) NOT NULL,
     `subscription_id` INTEGER NOT NULL,
     `status` VARCHAR(191) NOT NULL DEFAULT 'PENDING',
-    `total_meal` VARCHAR(191) NOT NULL,
+    `meal_type_id` INTEGER NOT NULL,
+    `total_meal` INTEGER NOT NULL,
     `charges` INTEGER NOT NULL,
     `ordered_address_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
@@ -213,6 +218,7 @@ CREATE TABLE `Orders` (
 -- CreateTable
 CREATE TABLE `Order_Criteria` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `parent_plan_id` INTEGER NOT NULL,
     `meal_type_id` INTEGER NOT NULL,
     `order_time` VARCHAR(191) NOT NULL,
     `cutoff_time` VARCHAR(191) NOT NULL,
@@ -225,10 +231,24 @@ CREATE TABLE `Order_Criteria` (
 -- CreateTable
 CREATE TABLE `Order_Item` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `customer_id` VARCHAR(191) NOT NULL,
     `user_sub_id` INTEGER NOT NULL,
     `food_item_id` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
     `price_id` INTEGER NOT NULL,
+    `order_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Cart` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `subscription_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `food_item_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -266,7 +286,6 @@ CREATE TABLE `Daily_Menu` (
 CREATE TABLE `Additional_Itemss` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `food_item_id` INTEGER NOT NULL,
-    `is_additional` BOOLEAN NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -288,8 +307,6 @@ CREATE TABLE `Periodical` (
 CREATE TABLE `Item_Payment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `payment_method` VARCHAR(191) NOT NULL,
-    `food_item_id` INTEGER NOT NULL,
-    `user_id` INTEGER NOT NULL,
     `customer_id` VARCHAR(191) NOT NULL,
     `user_subscription_id` INTEGER NOT NULL,
     `payment_status` VARCHAR(191) NOT NULL,
@@ -373,6 +390,29 @@ CREATE TABLE `Notification` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `Notification_Type` (
+    `notification_type_id` INTEGER NOT NULL AUTO_INCREMENT,
+    `type_name` VARCHAR(255) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updateAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`notification_type_id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Notification_Response` (
+    `notification_response_id` INTEGER NOT NULL AUTO_INCREMENT,
+    `notification_id` INTEGER NOT NULL,
+    `notification_status` ENUM('Pending', 'Sent', 'Failed') NOT NULL,
+    `notification_type_id` INTEGER NOT NULL,
+    `send_at` DATETIME(3) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updateAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`notification_response_id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `User_Wallet` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `refunded_amount` VARCHAR(191) NOT NULL,
@@ -380,19 +420,6 @@ CREATE TABLE `User_Wallet` (
     `customer_id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updateAt` DATETIME(3) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `cart` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `subscription_id` INTEGER NOT NULL,
-    `user_id` INTEGER NOT NULL,
-    `customer_id` VARCHAR(191) NOT NULL,
-    `food_item_id` INTEGER NOT NULL,
-    `created_at` DATETIME(3) NOT NULL,
-    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -441,10 +468,10 @@ ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_meal_type_id_fkey` FOREI
 ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_price_id_fkey` FOREIGN KEY (`price_id`) REFERENCES `Pricing_Details`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription_Pricing` ADD CONSTRAINT `Subscription_Pricing_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -456,10 +483,19 @@ ALTER TABLE `Subscription_Pricing` ADD CONSTRAINT `Subscription_Pricing_pricing_
 ALTER TABLE `Food_Items` ADD CONSTRAINT `Food_Items_price_id_fkey` FOREIGN KEY (`price_id`) REFERENCES `Pricing_Details`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Subscription_Food_Menu` ADD CONSTRAINT `Subscription_Food_Menu_meal_type_id_fkey` FOREIGN KEY (`meal_type_id`) REFERENCES `Meal_type`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Subscription_Food_Menu` ADD CONSTRAINT `Subscription_Food_Menu_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription_Food_Menu` ADD CONSTRAINT `Subscription_Food_Menu_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Subscription_Food_Menu` ADD CONSTRAINT `Subscription_Food_Menu_parent_plan_id_fkey` FOREIGN KEY (`parent_plan_id`) REFERENCES `Parent_Plan`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Subscription_Food_Menu` ADD CONSTRAINT `Subscription_Food_Menu_tier_id_fkey` FOREIGN KEY (`tier_id`) REFERENCES `Tier`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription_Order` ADD CONSTRAINT `Subscription_Order_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -468,25 +504,70 @@ ALTER TABLE `Subscription_Order` ADD CONSTRAINT `Subscription_Order_user_subscri
 ALTER TABLE `Subscription_Order` ADD CONSTRAINT `Subscription_Order_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Orders` ADD CONSTRAINT `Orders_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_ordered_address_id_fkey` FOREIGN KEY (`ordered_address_id`) REFERENCES `User_Address`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_meal_type_id_fkey` FOREIGN KEY (`meal_type_id`) REFERENCES `Meal_type`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Order_Criteria` ADD CONSTRAINT `Order_Criteria_parent_plan_id_fkey` FOREIGN KEY (`parent_plan_id`) REFERENCES `Parent_Plan`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Order_Criteria` ADD CONSTRAINT `Order_Criteria_meal_type_id_fkey` FOREIGN KEY (`meal_type_id`) REFERENCES `Meal_type`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_user_sub_id_fkey` FOREIGN KEY (`user_sub_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_order_id_fkey` FOREIGN KEY (`order_id`) REFERENCES `Orders`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_user_sub_id_fkey` FOREIGN KEY (`user_sub_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_price_id_fkey` FOREIGN KEY (`price_id`) REFERENCES `Pricing_Details`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Cart` ADD CONSTRAINT `Cart_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Cart` ADD CONSTRAINT `Cart_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Cart` ADD CONSTRAINT `Cart_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `User_Food_Report` ADD CONSTRAINT `User_Food_Report_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Daily_Menu` ADD CONSTRAINT `Daily_Menu_subscription_food_menu_id_fkey` FOREIGN KEY (`subscription_food_menu_id`) REFERENCES `Subscription_Food_Menu`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Daily_Menu` ADD CONSTRAINT `Daily_Menu_period_fkey` FOREIGN KEY (`period`) REFERENCES `Periodical`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Additional_Itemss` ADD CONSTRAINT `Additional_Itemss_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Item_Payment` ADD CONSTRAINT `Item_Payment_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Item_Payment` ADD CONSTRAINT `Item_Payment_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Notification_Response` ADD CONSTRAINT `Notification_Response_notification_id_fkey` FOREIGN KEY (`notification_id`) REFERENCES `Notification`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Notification_Response` ADD CONSTRAINT `Notification_Response_notification_type_id_fkey` FOREIGN KEY (`notification_type_id`) REFERENCES `Notification_Type`(`notification_type_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `User_Rating` ADD CONSTRAINT `User_Rating_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
