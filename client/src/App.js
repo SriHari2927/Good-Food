@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
-import { Routes, Route, BrowserRouter, Outlet } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Payment from "./components/User/Subscription/Payment";
 import Order from "./components/User/Home/Order";
 import SubscriptionCalender from "./components/User/Home/SubscriptionCalender";
@@ -46,10 +46,8 @@ const App = () => {
             <Route path="/" element={<OverallHome />} />
             <Route path="/LoginPopup" element={<LoginPopup />} />
             <Route path="/SignIn" element={<SignIn />} />
-            <Route
-              path=":planName/:planType/:mealType"
-              element={<PlanDetails />}
-            />
+           <Route path=":planName/:planType/:mealType" element={<PlanDetails />} />
+
           </Route>
 
           <Route element={<ProtectedLayout />}>
@@ -64,7 +62,7 @@ const App = () => {
               <Route path="Skippedcart" element={<Skippedcart />} />
               <Route path="subscription" element={<Subscription />} />
               <Route path="Payment/:id" element={<Payment />} />
-              <Route path="Home/:id" element={<Home />} />
+              <Route path="Home" element={<Home />} />
               <Route path="Navbar" element={<Navbar />} />
               <Route path="Order" element={<Order />} />
               {/* <Route path="Account" element={<Account />} /> */}

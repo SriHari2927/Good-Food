@@ -82,6 +82,7 @@ app.use('/extra',additionalRoutes)
 
 
 app.use(authentication);
+app.use('/dailyPeriod',dailyMenuRoutes)
 
 
 app.use('/userSubscription',userSubscriptionRoutes)
@@ -117,7 +118,6 @@ app.use('/foodReport',userFoodReportRoutes)
 
 //sms routes
 app.use('/sms', smsRoutes);
-app.use('/dailyPeriod',dailyMenuRoutes)
 
 
 

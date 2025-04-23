@@ -237,3 +237,63 @@ margin-bottom: 3rem; /* Default spacing */
 .meal-section:nth-child(2n) { /* Add extra space after breakfast and lunch */
 margin-bottom: 5rem;
 }
+
+
+.menu-preview {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.meal-section {
+  margin-bottom: 30px;
+}
+
+.meal-section h4 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+  border-left: 4px solid #f77f00;
+  padding-left: 10px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.food-card {
+  background: #fafafa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.food-card:hover {
+  transform: scale(1.03);
+}
+
+.food-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.food-info {
+  padding: 15px;
+}
+
+.food-info h5 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+  color: #222;
+}
+
+.food-info p {
+  font-size: 0.9rem;
+  color: #666;
+}

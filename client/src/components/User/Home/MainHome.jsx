@@ -1,104 +1,148 @@
+// import axios from "axios";
+// import React, { useEffect, useState } from "react";
+// import "./MainHome.css";
+// import { IoMdLogOut } from "react-icons/io";
+// import { useSidebar } from "../../Sidebar/SidebarContext";
+
+// const MainHome = () => {
+//   const { isOpen } = useSidebar();
+
+//   const [additionalItems, setAdditionalItems] = useState([]);
+
+//   useEffect(() => {
+//     const fetchAdditionalItems = async () => {
+//       try {
+//         const token = localStorage.getItem("token");
+//         const response = await axios.get(
+//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/extra/getAllAdditional`,
+//           { headers: { Authorization: `Bearer ${token}` } }
+//         );
+//         console.log("Additional Items:",response.data)
+//         setAdditionalItems(response.data.foodItems);
+//       } catch (error) {
+//         console.error("Error fetching additional items:", error);
+//       }
+//     };
+
+//     fetchAdditionalItems();
+//   }, []);
+
+//   return (
+//     <div className={`main-content ${isOpen ? "shifted" : ""}`}>
+//       <button className="logout">
+//         <IoMdLogOut /> Logoutttttt
+//       </button>
+
+// <div className="weekly-menu">
+
+//        {/* Display Additional Items */}
+//         <div className="additional-items">
+//           <h2>Additional Items</h2>
+//           {additionalItems.length > 0 ? (
+//             <div className="food-items-container">
+//               {additionalItems.map((item, index) => (
+//                 <div key={index} className="food-item">
+//                   <img
+//                     src={item.image_url || "/placeholder.jpg"}
+//                     alt={item.name}
+//                     className="food-image"
+//                   />
+//                   <span>{item.name}</span>
+//                   <span>Price: ₹{item.price}</span>
+
+// <div className="food-item-actions">
+//   <button> Add </button>
+//                   </div>
+
+//                 </div>
+//               ))}
+//             </div>
+//           ) : (
+//             <p>No additional items available.</p>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default MainHome;
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MainHome.css";
 import { IoMdLogOut } from "react-icons/io";
-import { useParams } from "react-router-dom";
 import { useSidebar } from "../../Sidebar/SidebarContext";
 
 const MainHome = () => {
   const { isOpen } = useSidebar();
-
+  const [userMenus, setUserMenus] = useState([]);
   const [additionalItems, setAdditionalItems] = useState([]);
-  const [foodItems, setFoodItems] = useState([]);
-  const [isComboPlan, setIsComboPlan] = useState(false);
-  const { id } = useParams();
 
   useEffect(() => {
-    const fetchAdditionalItems = async () => {
+    const fetchMenusAndItems = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/extra/getAllAdditional`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setAdditionalItems(response.data.foodItems);
+
+        const [menuRes, extraRes] = await Promise.all([
+          axios.get(
+            `${process.env.REACT_APP_BACKEND_SERVER_URL}/dailyPeriod/userMenu`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          ),
+          axios.get(
+            `${process.env.REACT_APP_BACKEND_SERVER_URL}/extra/getAllAdditional`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          ),
+        ]);
+
+        setUserMenus(menuRes.data.dailyMenus || []);
+        setAdditionalItems(extraRes.data.foodItems || []);
       } catch (error) {
-        console.error("Error fetching additional items:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    const fetchFoodItems = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getFoodWithID/${id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        console.log("Food Items Response:", response.data);
-
-        const data = response.data.data;
-        if (data.length > 0) {
-          const firstItem = data[0];
-          setIsComboPlan(firstItem.subscription_meal_type === "Combo");
-          setFoodItems(firstItem.days || []);
-        }
-      } catch (error) {
-        console.error("Error fetching food items:", error);
-      }
-    };
-
-    fetchAdditionalItems();
-    fetchFoodItems();
-  }, [id]);
+    fetchMenusAndItems();
+  }, []);
 
   return (
     <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       <button className="logout">
-        <IoMdLogOut /> Logoutttttt
+        <IoMdLogOut /> Logout
       </button>
 
-      <div className="menu-containerr">
-        <div className="food-items-section">
-  <h2 className="week">Weekly Food Menu</h2>
-<br />
+      <div className="weekly-menu">
+        <div className="user-menu-section">
+          <h2>Your Daily Menu</h2>
+          {userMenus.length > 0 ? (
+            userMenus.map((menu, index) => {
+              const foodItems = Array.isArray(menu.subFoodMenuu?.FoodItems)
+                ? menu.subFoodMenuu.FoodItems
+                : [menu.subFoodMenuu?.FoodItems].filter(Boolean);
 
-<div className="weekly-menu">
-  {foodItems.length > 0 ? (
-    foodItems.map((day, index) => (
-      <div key={index} className="day-card">
-        <h5 className="day-title">{day.day_name}</h5>
-
-        {/* Make Food Items Scroll Horizontally */}
-        <div className="food-items-container">
-          {day.FoodItems && day.FoodItems.length > 0 ? (
-            day.FoodItems.map((food, i) => (
-              <div key={i} className="food-item">
-                <img src={food.image_url || "/placeholder.jpg"} alt={food.item_name} className="food-image" />
-
-                {/* Show meal type only if isComboPlan is true */}
-                {isComboPlan && <h4 className="meal-type">{food.food_meal_type}</h4>}
-
-                <span>{food.item_name}</span>
-
-                <div className="food-item-actions"><button>                  
-                   Add                 
-                  </button>
+              return (
+                <div key={index} className="food-items-container">
+                  {foodItems.map((item, idx) => (
+                    <div key={idx} className="food-item">
+                      <img
+                        src={item?.image_url || "/placeholder.jpg"}
+                        alt={item?.item_name || "Food Item"}
+                        className="food-image"
+                      />
+                      <span>{item?.item_name}</span>
+                      <div className="food-item-actions">
+                        <button>Add</button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))
+              );
+            })
           ) : (
-            <p>No food items available for this day.</p>
+            <p>No daily menu available.</p>
           )}
         </div>
-      </div>
-    ))
-  ) : (
-    <p>No food items available.</p>
-  )}
-</div>
-</div>
-       {/* Display Additional Items */}
+
         <div className="additional-items">
           <h2>Additional Items</h2>
           {additionalItems.length > 0 ? (
@@ -112,17 +156,9 @@ const MainHome = () => {
                   />
                   <span>{item.name}</span>
                   <span>Price: ₹{item.price}</span>
-                  {/* <div className="food-item-actions">
-                    <button> 
-                    <button>-</button> Add
-                    <button>+</button> 
-                    </button>
-                  </div> */}
-
-<div className="food-item-actions">
-  <button> Add </button>
+                  <div className="food-item-actions">
+                    <button>Add</button>
                   </div>
-                  
                 </div>
               ))}
             </div>
@@ -136,4 +172,5 @@ const MainHome = () => {
 };
 
 export default MainHome;
+
 

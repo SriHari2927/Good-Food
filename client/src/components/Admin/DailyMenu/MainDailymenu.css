@@ -1,81 +1,223 @@
-
-
-.day-dropdown{
-    background-color: aliceblue;
-    width: fit-content;
-    padding: 1.5rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 10px;
-    background-color: rgb(79, 9, 79);
-    /* background-color: chocolate; */
-    color: white;
-    background-color: rgb(61, 115, 216);
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 2rem 0 1rem;
 }
 
-select {
-    margin-left: 1rem;
-    font-size: 1rem;
+/* Main Container */
+.day-position {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-.day-position{
-    display: flex;
-    justify-content: space-around;
-}
-.day-save{
-    background-color: rgb(59, 48, 255);
-    height: 2.5rem;
-    width: 6rem;
-    padding: 0.2rem;
-    color: white;
-    border-radius: 8px;
-    margin-top: 1rem;
-    background-color: rgb(79, 9, 79);
-}
-.days-section{
-    display: flex;
-    justify-content: space-around;
-    
-}
-.days-section h3{
-    background-color: rgb(223, 223, 236);
-    background-color: coral;
-    border-radius: 8px;
-    padding: 1.2rem;
+/* Dropdown Group */
+.day-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #4a90e2, #357ABD);
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  width: 100%;
+  color: white;
+  transition: all 0.3s ease-in-out;
 }
 
-.days-section h3:hover{
-    background-color: coral;
-    background-color: rgb(79, 9, 79) ;
-    color: white;
-
+.day-dropdown:hover {
+  background: linear-gradient(to right, #3a78d2, #2d66b3);
 }
 
-
-/* .dayy-dropdownn{
-    background-color: aliceblue;
-    width: fit-content;
-    padding: 1.5rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 10px;
-    background-color: rgb(79, 9, 79);
-    color: white;
-    display: flex;
-    justify-content: space-around;
-} */
-
-
-.dayy-dropdownn{
-    display: flex;
-    justify-content: center;
-    padding: 1.3rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 10px;
-    background-color: rgb(79, 9, 79);
-    color: white;
-    margin-left: 37rem;
-    margin-right: 37rem;
-   
+.day-dropdown select {
+  margin-left: 1rem;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: #333;
+  font-weight: normal;
+  min-width: 180px;
 }
+
+/* Save Button */
+.day-save button {
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.day-save button:hover {
+  background-color: #732d91;
+}
+
+/* Food Table */
+.food-table-container {
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.food-table-container p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.food-table {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.meal-column {
+  flex: 1;
+  min-width: 220px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #fefefe;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.meal-column:hover {
+  transform: translateY(-4px);
+}
+
+.meal-column h4 {
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+  color: #34495e;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+/* Food Item */
+.food-item {
+  padding: 10px;
+  margin: 6px 0;
+  background-color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.food-item:hover {
+  background-color: #e8f4fd;
+  color: #2c3e50;
+}
+
+.food-item.selected {
+  background-color: #4a90e2;
+  color: white;
+  font-weight: bold;
+  border-color: #357ABD;
+}
+
+/* Optional Days Section */
+.days-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 2rem;
+}
+
+.days-section h3 {
+  background-color: #f39c12;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.days-section h3:hover {
+  background-color: #d68910;
+}
+
+/* Extra Dropdown Container (Optional) */
+.dayy-dropdownn {
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: #6c3483;
+  color: white;
+  margin: 1rem auto;
+  width: 70%;
+  text-align: center;
+}
+
+select optgroup {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+select option {
+  padding-left: 1rem;
+}
+
+.menu-cards-container {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.menu-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.meal-section {
+  margin-bottom: 0.75rem;
+}
+
+.meal-section h5 {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.meal-section ul {
+  padding-left: 1.2rem;
+}
+
+.meal-section li {
+  list-style: disc;
+}
+
