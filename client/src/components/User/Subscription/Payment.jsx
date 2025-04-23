@@ -139,7 +139,7 @@ const Payment = () => {
             const userSubscriptionId = data.subscription?.id;
             if (userSubscriptionId) {
               alert("Payment successful!");
-              navigate(`/user/Home/${userSubscriptionId}`);
+              navigate('/user/Home');
             } else {
               alert("Failed to create user subscription. Please try again.");
             }

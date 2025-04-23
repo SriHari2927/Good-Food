@@ -133,7 +133,7 @@ const getMenuWithSubID = async (req, res) => {
             MealSub: {
               select: {
                 id: true,
-                meal_type: true
+                meal_type: true,
               }
             },
             FoodSubscription: {

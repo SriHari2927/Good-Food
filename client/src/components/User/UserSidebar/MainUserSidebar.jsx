@@ -119,7 +119,7 @@ const MainUserSidebar = () => {
     } else if (menuItem === "Wallet") {
       navigate("/user/Wallet");
     } else if (menuItem === "Home") {
-      navigate("/user/Home");
+      navigate("/");
     } else if (menuItem === "Notification") {
       navigate("/user/Notification");
     } else if (menuItem === "Skippedcart") {

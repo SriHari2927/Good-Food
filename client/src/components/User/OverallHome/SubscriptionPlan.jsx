@@ -20,6 +20,7 @@ const SubscriptionPlan = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`
         );
+        console.log("SUBSCRIPTION :", response.data);
         setSubscriptions(response.data.formattedSubscriptions || {});
       } catch (error) {
         console.error("Error fetching subscriptions:", error.message);
@@ -36,7 +37,6 @@ const SubscriptionPlan = () => {
   const handleClosePopup = () => {
     setSelectedPlan(null);
   };
-
   const handleMealClick = (planName, planType, mealType) => {
     navigate(`${planName}/${planType}/${mealType}`);
   };
@@ -44,9 +44,7 @@ const SubscriptionPlan = () => {
   return (
     <>
       <div className="subscription-container">
-      
-          <h1 className="choose">Choose Your Plan for Subscription!</h1>
-     
+        <h1 className="choose">Choose Your Plan for Subscription!</h1>
 
         <section className="plans-section">
           {Object.keys(subscriptions).map((planName) => (
@@ -57,7 +55,6 @@ const SubscriptionPlan = () => {
               <div className="description-card" id="individual-section">
                 {planName === "Individual Plan" && (
                   <>
-
                     <p className="plann-description">
                       {planName} - You can subscribe to only one meal:
                       (Breakfast, Lunch, or Dinner).
@@ -68,43 +65,41 @@ const SubscriptionPlan = () => {
                     >
                       <h2 className="plan-name">{planName}</h2>
                     </div>
-                    
+
                     <div className="images-container">
-  <div className="image-with-label">
-    <img
-      src={breakfastImage}
-      alt="Breakfast"
-      className="plan-image"
-    />
-    <div>Breakfast</div>
-  </div>
+                      <div className="image-with-label">
+                        <img
+                          src={breakfastImage}
+                          alt="Breakfast"
+                          className="plan-image"
+                        />
+                        <div>Breakfast</div>
+                      </div>
 
-  <div className="image-with-label">
-    <img
-      src={lunchImage}
-      alt="Lunch"
-      className="plan-image"
-    />
-    <div>Lunch</div>
-  </div>
+                      <div className="image-with-label">
+                        <img
+                          src={lunchImage}
+                          alt="Lunch"
+                          className="plan-image"
+                        />
+                        <div>Lunch</div>
+                      </div>
 
-  <div className="image-with-label">
-    <img
-      src={dinnerImage}
-      alt="Dinner"
-      className="plan-image"
-    />
-    <div>Dinner</div>
-  </div>
-</div>
-
+                      <div className="image-with-label">
+                        <img
+                          src={dinnerImage}
+                          alt="Dinner"
+                          className="plan-image"
+                        />
+                        <div>Dinner</div>
+                      </div>
+                    </div>
                   </>
                 )}
 
                 {planName === "Combo Plan" && (
                   <>
                     <div id="combo-section">
-                   
                       <p className="plann-description">
                         {planName} - This plan includes all three meals:
                         (Breakfast, Lunch, and Dinner).
@@ -116,7 +111,6 @@ const SubscriptionPlan = () => {
                         <h2 className="plan-name">{planName}</h2>
                       </div>
 
-                   
                       <img
                         src={comboImage}
                         alt="Combo Plan"
@@ -124,10 +118,12 @@ const SubscriptionPlan = () => {
                         style={{
                           marginLeft: "0rem",
                           marginTop: "5rem",
-                          
                         }}
                       />
-                      <div style={{marginRight:'6rem', fontSize:'1.2rem'}}> Combo</div>
+                      <div style={{ marginRight: "6rem", fontSize: "1.2rem" }}>
+                        {" "}
+                        Combo
+                      </div>
                     </div>{" "}
                   </>
                 )}
@@ -153,13 +149,19 @@ const SubscriptionPlan = () => {
                               <div
                                 key={mealType}
                                 className="meal-card"
-                                onClick={() =>
+                                onClick={() => {
+                                  const onePlan =
+                                    subscriptions[selectedPlan][planType][
+                                      mealType
+                                    ][0]; 
                                   handleMealClick(
                                     selectedPlan,
                                     planType,
-                                    mealType
-                                  )
-                                }
+                                    mealType,
+                                    onePlan.id
+
+                                  );
+                                }}
                               >
                                 {mealType}
                               </div>
